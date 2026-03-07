@@ -20,3 +20,11 @@ def mask_account_card(input_string: str) -> str:
         card_number = input_string[last_space_index + 1:]
         masked_number = get_mask_card_number(card_number)
         return f"{card_type} {masked_number}"
+
+
+def get_date(date_str: str) -> str:
+    """
+    Преобразует строку с датой из формата ISO 8601 в формат ДД.ММ.ГГГГ
+    """
+    from datetime import datetime
+    return datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%f").strftime("%d.%m.%Y")
