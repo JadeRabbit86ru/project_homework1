@@ -8,3 +8,4 @@ def get_mask_account(account_number: str) -> str:
     return "**" + account_number[-4:]
 
 
+print('Какие-то изменения для коммита start2')
