@@ -4,15 +4,10 @@
 
 ## Установка
 
-1. Клонируйте репозиторий:
+Клонируйте репозиторий:
 ```bash
 git clone git@github.com:JadeRabbit86ru/project_homework1.git
-
-2. Перейдите в директорию проекта:
-bash
-
-cd project_homework1
-
+```
 ## Использование
 
 ### Маскировка карты и счета
