@@ -145,3 +145,9 @@ print(sorted_desc)  # Сначала id=2, потом id=3, потом id=1
 
 sorted_asc = sort_by_date(operations, reverse=False)
 print(sorted_asc)  # Сначала id=1, потом id=3, потом id=2
+
+## Автор
+
+Jade_Rabbit
+
+Манаенков Илья
