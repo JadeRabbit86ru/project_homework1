@@ -1,7 +1,11 @@
 """Тесты для модуля widget."""
+
 import pytest
-from datetime import datetime
-from src.widget import get_mask_card_number, get_mask_account, mask_account_card, get_date
+
+from src.widget import get_date
+from src.widget import get_mask_account
+from src.widget import get_mask_card_number
+from src.widget import mask_account_card
 
 
 class TestWidgetMaskCardNumber:
