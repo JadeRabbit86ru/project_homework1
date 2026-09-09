@@ -146,89 +146,29 @@ print(sorted_desc)  # Сначала id=2, потом id=3, потом id=1
 sorted_asc = sort_by_date(operations, reverse=False)
 print(sorted_asc)  # Сначала id=1, потом id=3, потом id=2
 
-### Обновление 11.1
+## Тестирование
 
-## Новые функции
+Проект включает модульные тесты для проверки корректности работы всех функций.
 
-filter_by_currency - Фильтрует транзакции по заданной валюте.
+### Запуск тестов
 
-Пример
+Для запуска тестов используйте pytest:
 
-transactions = [
-    {
-        "operationAmount": {
-            "amount": "100.00",
-            "currency": {"code": "USD"}
-        },
-        "description": "Платеж в долларах"
-    },
-    {
-        "operationAmount": {
-            "amount": "200.00",
-            "currency": {"code": "EUR"}
-        },
-        "description": "Платеж в евро"
-    }
-]
+```bash
+pytest tests/
+```
 
-usd_transactions = filter_by_currency(transactions, "USD")
-for transaction in usd_transactions:
-    print(transaction['description'])  # Выведет: Платеж в долларах
+Или с подробным выводом:
 
+```bash
+pytest tests/ -v
+```
 
-transaction_descriptions - Генератор, который возвращает описание каждой транзакции по очереди.
+### Структура тестов
 
-Пример:
-
-transactions = [
-    {"description": "Перевод организации"},
-    {"description": "Перевод со счета на счет"},
-    {"id": 123},  # Без описания
-    {"description": ""}  # Пустое описание
-]
-
-descriptions = transaction_descriptions(transactions)
-for desc in descriptions:
-    print(desc)  # Выведет: Перевод организации, Перевод со счета на счет
-
-
-card_number_generator - Генератор номеров банковских карт в заданном диапазоне.
-
-Пример:
-
-# Генерация первых 5 номеров
-for card_number in card_number_generator(1, 5):
-    print(card_number)
-# Вывод:
-# 0000 0000 0000 0001
-# 0000 0000 0000 0002
-# 0000 0000 0000 0003
-# 0000 0000 0000 0004
-# 0000 0000 0000 0005
-
-# Генерация с переходом через разряд
-for card in card_number_generator(9998, 10002):
-    print(card)
-# Вывод:
-# 0000 0000 0000 9998
-# 0000 0000 0000 9999
-# 0000 0000 0001 0000
-# 0000 0000 0001 0001
-# 0000 0000 0001 0002
-
-## Новые тесты
-
-TestFilterByCurrency: 9 тестов для функции filter_by_currency
-TestTransactionDescriptions: 8 тестов для функции transaction_descriptions
-TestCardNumberGenerator: 14 тестов для генератора card_number_generator
-
-Тесты покрывают более 80% кода и включают:
-Позитивные сценарии (успешная работа)
-Негативные сценарии (обработка ошибок)
-Крайние случаи (пустые списки, граничные значения)
-Проверку типов (возвращаемые итераторы/генераторы)
-
-Параметризованные тесты
+- `test_masks.py` — тесты для функций маскировки карт и счетов
+- `test_processing.py` — тесты для функций фильтрации и сортировки операций
+- `test_widget.py` — тесты для виджетов
 
 ## Автор
 
