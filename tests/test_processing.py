@@ -1,7 +1,9 @@
 """Тесты для модуля processing."""
+
 import pytest
-from datetime import datetime
-from src.processing import filter_by_state, sort_by_date
+
+from src.processing import filter_by_state
+from src.processing import sort_by_date
 
 
 @pytest.fixture
@@ -177,9 +179,7 @@ class TestSortByDate:
             (False, "2024-01-13T08:00:00.000000"),  # По возрастанию - самая ранняя
         ],
     )
-    def test_parametrized_sort_order(
-        self, sample_transactions, reverse, expected_first_date
-    ):
+    def test_parametrized_sort_order(self, sample_transactions, reverse, expected_first_date):
         """Параметризованный тест для проверки порядка сортировки."""
         result = sort_by_date(sample_transactions, reverse=reverse)
         assert result[0]["date"] == expected_first_date

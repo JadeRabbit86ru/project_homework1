@@ -1,21 +1,28 @@
-from typing import List, Dict, Iterator, Any, Generator
+from typing import Any
+from typing import Dict
+from typing import Generator
+from typing import Iterator
+from typing import List
 
 
 def filter_by_currency(transactions: List[Dict[str, Any]], currency_code: str) -> Iterator[Dict[str, Any]]:
     """
     Фильтрует транзакции по валюте.
     """
-    return (transaction for transaction in transactions
-            if transaction.get('operationAmount', {}).get('currency', {}).get('code') == currency_code)
+    return (
+        transaction
+        for transaction in transactions
+        if transaction.get("operationAmount", {}).get("currency", {}).get("code") == currency_code
+    )
 
 
-def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Iterator[str]:
+def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Generator[str, None, None]:
     """
     Генератор, который возвращает описание каждой транзакции (версия с генераторным выражением).
     """
     for transaction in transactions:
-        if transaction.get('description'):
-            yield transaction.get('description')
+        if transaction.get("description"):
+            yield transaction.get("description")
 
 
 def card_number_generator(start: int, end: int) -> Generator[str, None, None]:

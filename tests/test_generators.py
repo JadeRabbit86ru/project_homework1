@@ -1,6 +1,12 @@
+from typing import Any
+from typing import Dict
+from typing import List
+
 import pytest
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
-from typing import List, Dict, Any, Generator
+
+from src.generators import card_number_generator
+from src.generators import filter_by_currency
+from src.generators import transaction_descriptions
 
 
 # Фикстуры
@@ -12,77 +18,47 @@ def sample_transactions() -> List[Dict[str, Any]]:
             "id": 939719570,
             "state": "EXECUTED",
             "date": "2018-06-30T02:08:58.425572",
-            "operationAmount": {
-                "amount": "9824.07",
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
-            },
+            "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
             "description": "Перевод организации",
             "from": "Счет 75106830613657916952",
-            "to": "Счет 11776614605963066702"
+            "to": "Счет 11776614605963066702",
         },
         {
             "id": 142264268,
             "state": "EXECUTED",
             "date": "2019-04-04T23:20:05.206878",
-            "operationAmount": {
-                "amount": "79114.93",
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
-            },
+            "operationAmount": {"amount": "79114.93", "currency": {"name": "USD", "code": "USD"}},
             "description": "Перевод со счета на счет",
             "from": "Счет 19708645243227258542",
-            "to": "Счет 75651667383060284188"
+            "to": "Счет 75651667383060284188",
         },
         {
             "id": 873106923,
             "state": "EXECUTED",
             "date": "2019-03-23T01:03:18.123456",
-            "operationAmount": {
-                "amount": "43318.34",
-                "currency": {
-                    "name": "RUB",
-                    "code": "RUB"
-                }
-            },
+            "operationAmount": {"amount": "43318.34", "currency": {"name": "RUB", "code": "RUB"}},
             "description": "Перевод со счета на счет",
             "from": "Счет 44812258736616364091",
-            "to": "Счет 99066364287803317845"
+            "to": "Счет 99066364287803317845",
         },
         {
             "id": 594226727,
             "state": "CANCELED",
             "date": "2018-09-12T21:27:25.241689",
-            "operationAmount": {
-                "amount": "67314.70",
-                "currency": {
-                    "name": "RUB",
-                    "code": "RUB"
-                }
-            },
+            "operationAmount": {"amount": "67314.70", "currency": {"name": "RUB", "code": "RUB"}},
             "description": "Перевод с карты на карту",
             "from": "Visa 1952884635627909",
-            "to": "Maestro 7010870499239262"
+            "to": "Maestro 7010870499239262",
         },
         {
             "id": 615064773,
             "state": "EXECUTED",
             "date": "2018-10-14T08:21:33.419441",
-            "operationAmount": {
-                "amount": "77751.04",
-                "currency": {
-                    "name": "EUR",
-                    "code": "EUR"
-                }
-            },
+            "operationAmount": {"amount": "77751.04", "currency": {"name": "EUR", "code": "EUR"}},
             "description": "Перевод организации",
             "from": "Счет 78808375133947487327",
-            "to": "Счет 74342583020137146360"
-        }
+            "to": "Счет 74342583020137146360",
+        },
     ]
 
 
@@ -96,20 +72,8 @@ def empty_transactions() -> List[Dict[str, Any]]:
 def transactions_without_currency() -> List[Dict[str, Any]]:
     """Фикстура с транзакциями без валюты."""
     return [
-        {
-            "id": 1,
-            "description": "Транзакция без валюты",
-            "operationAmount": {
-                "amount": "100.00"
-            }
-        },
-        {
-            "id": 2,
-            "description": "Еще одна без валюты",
-            "operationAmount": {
-                "amount": "200.00"
-            }
-        }
+        {"id": 1, "description": "Транзакция без валюты", "operationAmount": {"amount": "100.00"}},
+        {"id": 2, "description": "Еще одна без валюты", "operationAmount": {"amount": "200.00"}},
     ]
 
 
@@ -117,33 +81,18 @@ def transactions_without_currency() -> List[Dict[str, Any]]:
 def transactions_without_description() -> List[Dict[str, Any]]:
     """Фикстура с транзакциями без описания."""
     return [
-        {
-            "id": 1,
-            "operationAmount": {
-                "amount": "100.00",
-                "currency": {"code": "USD"}
-            }
-        },
-        {
-            "id": 2,
-            "description": "",
-            "operationAmount": {
-                "amount": "200.00",
-                "currency": {"code": "USD"}
-            }
-        },
+        {"id": 1, "operationAmount": {"amount": "100.00", "currency": {"code": "USD"}}},
+        {"id": 2, "description": "", "operationAmount": {"amount": "200.00", "currency": {"code": "USD"}}},
         {
             "id": 3,
             "description": "Есть описание",
-            "operationAmount": {
-                "amount": "300.00",
-                "currency": {"code": "USD"}
-            }
-        }
+            "operationAmount": {"amount": "300.00", "currency": {"code": "USD"}},
+        },
     ]
 
 
 # ==================== ТЕСТЫ ДЛЯ filter_by_currency ====================
+
 
 class TestFilterByCurrency:
     """Тесты для функции filter_by_currency."""
@@ -154,9 +103,9 @@ class TestFilterByCurrency:
 
         assert len(usd_transactions) == 2
         for transaction in usd_transactions:
-            assert transaction['operationAmount']['currency']['code'] == "USD"
-        assert usd_transactions[0]['id'] == 939719570
-        assert usd_transactions[1]['id'] == 142264268
+            assert transaction["operationAmount"]["currency"]["code"] == "USD"
+        assert usd_transactions[0]["id"] == 939719570
+        assert usd_transactions[1]["id"] == 142264268
 
     def test_filter_by_currency_rub(self, sample_transactions):
         """Тест фильтрации по валюте RUB."""
@@ -164,17 +113,17 @@ class TestFilterByCurrency:
 
         assert len(rub_transactions) == 2
         for transaction in rub_transactions:
-            assert transaction['operationAmount']['currency']['code'] == "RUB"
-        assert rub_transactions[0]['id'] == 873106923
-        assert rub_transactions[1]['id'] == 594226727
+            assert transaction["operationAmount"]["currency"]["code"] == "RUB"
+        assert rub_transactions[0]["id"] == 873106923
+        assert rub_transactions[1]["id"] == 594226727
 
     def test_filter_by_currency_eur(self, sample_transactions):
         """Тест фильтрации по валюте EUR."""
         eur_transactions = list(filter_by_currency(sample_transactions, "EUR"))
 
         assert len(eur_transactions) == 1
-        assert eur_transactions[0]['operationAmount']['currency']['code'] == "EUR"
-        assert eur_transactions[0]['id'] == 615064773
+        assert eur_transactions[0]["operationAmount"]["currency"]["code"] == "EUR"
+        assert eur_transactions[0]["id"] == 615064773
 
     def test_filter_by_currency_not_found(self, sample_transactions):
         """Тест фильтрации по отсутствующей валюте."""
@@ -198,12 +147,12 @@ class TestFilterByCurrency:
         """Тест проверки, что функция возвращает итератор."""
         result = filter_by_currency(sample_transactions, "USD")
 
-        assert hasattr(result, '__next__')
-        assert hasattr(result, '__iter__')
+        assert hasattr(result, "__next__")
+        assert hasattr(result, "__iter__")
 
         # Проверка, что можно получить элементы через next()
         first = next(result)
-        assert first['operationAmount']['currency']['code'] == "USD"
+        assert first["operationAmount"]["currency"]["code"] == "USD"
 
     def test_filter_by_currency_case_sensitive(self, sample_transactions):
         """Тест чувствительности к регистру."""
@@ -219,13 +168,16 @@ class TestFilterByCurrency:
 
         assert result == []
 
-    @pytest.mark.parametrize("currency_code,expected_count", [
-        ("USD", 2),
-        ("RUB", 2),
-        ("EUR", 1),
-        ("GBP", 0),
-        ("", 0),
-    ])
+    @pytest.mark.parametrize(
+        "currency_code,expected_count",
+        [
+            ("USD", 2),
+            ("RUB", 2),
+            ("EUR", 1),
+            ("GBP", 0),
+            ("", 0),
+        ],
+    )
     def test_filter_by_currency_parametrized(self, sample_transactions, currency_code, expected_count):
         """Параметризованный тест фильтрации по разным валютам."""
         result = list(filter_by_currency(sample_transactions, currency_code))
@@ -234,6 +186,7 @@ class TestFilterByCurrency:
 
 
 # ==================== ТЕСТЫ ДЛЯ transaction_descriptions ====================
+
 
 class TestTransactionDescriptions:
     """Тесты для генератора transaction_descriptions."""
@@ -247,7 +200,7 @@ class TestTransactionDescriptions:
             "Перевод со счета на счет",
             "Перевод со счета на счет",
             "Перевод с карты на карту",
-            "Перевод организации"
+            "Перевод организации",
         ]
         assert descriptions == expected
 
@@ -268,8 +221,8 @@ class TestTransactionDescriptions:
         """Тест проверки, что функция возвращает генератор."""
         result = transaction_descriptions(sample_transactions)
 
-        assert hasattr(result, '__next__')
-        assert hasattr(result, '__iter__')
+        assert hasattr(result, "__next__")
+        assert hasattr(result, "__iter__")
 
         # Проверка получения через next()
         first = next(result)
@@ -277,20 +230,14 @@ class TestTransactionDescriptions:
 
     def test_transaction_descriptions_single_transaction(self):
         """Тест с одной транзакцией."""
-        transactions = [
-            {"description": "Одна транзакция"}
-        ]
+        transactions = [{"description": "Одна транзакция"}]
         descriptions = list(transaction_descriptions(transactions))
 
         assert descriptions == ["Одна транзакция"]
 
     def test_transaction_descriptions_all_empty_descriptions(self):
         """Тест с транзакциями, у которых все описания пустые."""
-        transactions = [
-            {"description": ""},
-            {"description": ""},
-            {"description": ""}
-        ]
+        transactions = [{"description": ""}, {"description": ""}, {"description": ""}]
         descriptions = list(transaction_descriptions(transactions))
 
         assert descriptions == []
@@ -302,18 +249,21 @@ class TestTransactionDescriptions:
             {"description": ""},
             {"description": "Описание 3"},
             {"id": 4},  # Без описания
-            {"description": "Описание 5"}
+            {"description": "Описание 5"},
         ]
         descriptions = list(transaction_descriptions(transactions))
 
         assert descriptions == ["Описание 1", "Описание 3", "Описание 5"]
 
-    @pytest.mark.parametrize("transactions,expected", [
-        ([{"description": "A"}, {"description": "B"}], ["A", "B"]),
-        ([{"description": ""}, {"description": "C"}], ["C"]),
-        ([], []),
-        ([{"description": "D"}], ["D"]),
-    ])
+    @pytest.mark.parametrize(
+        "transactions,expected",
+        [
+            ([{"description": "A"}, {"description": "B"}], ["A", "B"]),
+            ([{"description": ""}, {"description": "C"}], ["C"]),
+            ([], []),
+            ([{"description": "D"}], ["D"]),
+        ],
+    )
     def test_transaction_descriptions_parametrized(self, transactions, expected):
         """Параметризованный тест с разными наборами транзакций."""
         result = list(transaction_descriptions(transactions))
@@ -322,6 +272,7 @@ class TestTransactionDescriptions:
 
 
 # ==================== ТЕСТЫ ДЛЯ card_number_generator ====================
+
 
 class TestCardNumberGenerator:
     """Тесты для генератора card_number_generator."""
@@ -335,7 +286,7 @@ class TestCardNumberGenerator:
             "0000 0000 0000 0002",
             "0000 0000 0000 0003",
             "0000 0000 0000 0004",
-            "0000 0000 0000 0005"
+            "0000 0000 0000 0005",
         ]
         assert result == expected
 
@@ -348,7 +299,7 @@ class TestCardNumberGenerator:
             "0000 0000 0000 9999",
             "0000 0000 0001 0000",
             "0000 0000 0001 0001",
-            "0000 0000 0001 0002"
+            "0000 0000 0001 0002",
         ]
         assert result == expected
 
@@ -362,7 +313,7 @@ class TestCardNumberGenerator:
             "9999 9999 9999 9992",
             "9999 9999 9999 9993",
             "9999 9999 9999 9994",
-            "9999 9999 9999 9995"
+            "9999 9999 9999 9995",
         ]
         assert result == expected
 
@@ -376,8 +327,8 @@ class TestCardNumberGenerator:
         """Тест проверки, что функция возвращает генератор."""
         result = card_number_generator(1, 5)
 
-        assert hasattr(result, '__next__')
-        assert hasattr(result, '__iter__')
+        assert hasattr(result, "__next__")
+        assert hasattr(result, "__iter__")
 
         # Проверка получения через next()
         first = next(result)
@@ -420,13 +371,15 @@ class TestCardNumberGenerator:
 
         assert result == ["9999 9999 9999 9999"]
 
-    @pytest.mark.parametrize("start,end,expected_first,expected_last", [
-        (1, 3, "0000 0000 0000 0001", "0000 0000 0000 0003"),
-        (100, 103, "0000 0000 0000 0100", "0000 0000 0000 0103"),
-        (9999, 10002, "0000 0000 0000 9999", "0000 0000 0001 0002"),
-        (1000000000000000, 1000000000000003,
-         "0001 0000 0000 0000", "0001 0000 0000 0003"),
-    ])
+    @pytest.mark.parametrize(
+        "start,end,expected_first,expected_last",
+        [
+            (1, 3, "0000 0000 0000 0001", "0000 0000 0000 0003"),
+            (100, 103, "0000 0000 0000 0100", "0000 0000 0000 0103"),
+            (9999, 10002, "0000 0000 0000 9999", "0000 0000 0001 0002"),
+            (1000000000000000, 1000000000000003, "0001 0000 0000 0000", "0001 0000 0000 0003"),
+        ],
+    )
     def test_card_number_generator_parametrized(self, start, end, expected_first, expected_last):
         """Параметризованный тест разных диапазонов."""
         result = list(card_number_generator(start, end))
@@ -439,11 +392,7 @@ class TestCardNumberGenerator:
         """Тест правильности форматирования номеров карт."""
         result = list(card_number_generator(1234567890123456, 1234567890123458))
 
-        expected = [
-            "1234 5678 9012 3456",
-            "1234 5678 9012 3457",
-            "1234 5678 9012 3458"
-        ]
+        expected = ["1234 5678 9012 3456", "1234 5678 9012 3457", "1234 5678 9012 3458"]
         assert result == expected
 
     def test_card_number_generator_all_digits(self):
