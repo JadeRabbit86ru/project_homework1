@@ -4,7 +4,6 @@ from typing import List, Dict, Any, Generator
 
 
 # Фикстуры
-
 @pytest.fixture
 def sample_transactions() -> List[Dict[str, Any]]:
     """Фикстура с набором тестовых транзакций."""
