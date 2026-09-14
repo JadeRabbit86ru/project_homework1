@@ -28,16 +28,6 @@ def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Generator[st
 def card_number_generator(start: int, end: int) -> Generator[str, None, None]:
     """
     Генератор номеров банковских карт в заданном диапазоне.
-
-    Args:
-        start: Начальное значение диапазона (включительно)
-        end: Конечное значение диапазона (включительно)
-
-    Yields:
-        Номер карты в формате "XXXX XXXX XXXX XXXX"
-
-    Raises:
-        ValueError: Если start > end или значения выходят за допустимый диапазон
     """
     # Проверка корректности диапазона
     if start > end:
