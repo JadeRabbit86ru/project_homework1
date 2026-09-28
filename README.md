@@ -190,6 +190,54 @@ pytest tests/ -v
   благодаря `functools.wraps`.
 - Проброс исключения наружу — поведение функции не изменяется.
 
+# Обновление 12.1 от 29.10.2026
+
+## Новые модули
+
+### Модуль `src/utils.py`
+
+**Функция `load_transactions_from_json(filepath)`** — загружает список финансовых транзакций из JSON-файла.
+- Возвращает список словарей с данными о транзакциях
+- Если файл не найден, пустой, содержит не список или невалидный JSON — возвращает пустой список
+
+### Модуль `src/external_api.py`
+
+**Функция `get_exchange_rate(currency)`** — получает текущий курс валюты (USD или EUR) к рублю через внешнее API. При недоступности основного API автоматически переключается на резервный источник.
+
+**Функция `convert_to_rubles(transaction)`** — возвращает сумму транзакции в рублях (float).
+- Если валюта RUB — сумма возвращается без изменений
+- Если валюта USD или EUR — выполняется конвертация через API по актуальному курсу
+- Для неподдерживаемых валют выбрасывается `ValueError`
+
+API-ключ для внешнего сервиса хранится в файле `.env` (переменная `EXCHANGE_RATES_API_KEY`).
+
+## Новые тесты
+
+### `tests/test_utils.py` — тесты функции `load_transactions_from_json`
+
+| Тест | Что проверяет |
+|------|---------------|
+| `test_load_valid_json` | Корректная загрузка валидного JSON-файла со списком транзакций |
+| `test_file_not_found` | Возврат пустого списка при отсутствии файла |
+| `test_empty_file` | Возврат пустого списка для пустого файла |
+| `test_file_contains_dict_not_list` | Возврат пустого списка, если в файле словарь, а не список |
+| `test_file_contains_string_not_list` | Возврат пустого списка, если в файле строка |
+| `test_invalid_json` | Возврат пустого списка при невалидном JSON |
+| `test_empty_list` | Возврат пустого списка, если в файле пустой список `[]` |
+
+### `tests/test_external_api.py` — тесты функций `get_exchange_rate` и `convert_to_rubles`
+
+| Тест | Что проверяет |
+|------|---------------|
+| `test_get_exchange_rate_usd` | Получение курса USD к RUB через API (с Mock ответа) |
+| `test_get_exchange_rate_eur` | Получение курса EUR к RUB через API (с Mock ответа) |
+| `test_get_exchange_rate_api_error` | Выброс `ValueError` при ошибке ответа API |
+| `test_convert_rub_transaction` | Транзакция в RUB возвращается без конвертации |
+| `test_convert_usd_transaction` | Конвертация транзакции из USD в RUB (с Mock курса) |
+| `test_convert_eur_transaction` | Конвертация транзакции из EUR в RUB (с Mock курса) |
+| `test_convert_unsupported_currency` | Выброс `ValueError` для неподдерживаемой валюты |
+| `test_convert_empty_transaction` | Возврат `0.0` для пустой транзакции |
+| `test_convert_usd_rounding` | Округление результата конвертации до 2 знаков после запятой |
 
 ## Автор
 
