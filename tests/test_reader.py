@@ -1,8 +1,12 @@
-import pytest
-import pandas as pd
-from typing import List, Dict, Any
+from typing import Any
+from typing import Dict
+from typing import List
 
-from reader import read_csv_transactions, read_xlsx_transactions
+import pandas as pd
+import pytest
+
+from reader import read_csv_transactions
+from reader import read_xlsx_transactions
 
 
 def test_read_csv_transactions(tmp_path) -> None:
