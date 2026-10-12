@@ -309,7 +309,30 @@ utils
 
 # Запись логов
 Запись логов производится в папку logs автоматически
- 
+
+### Обновление 12.3 от 11.10.2026
+
+## Новый модуль reader.py
+
+Функция read_csv_transactions
+
+Считывает финансовые операции из CSV-файла с использованием библиотеки csv.
+
+:param file_path: Путь к CSV-файлу.
+:return: Список словарей с данными о транзакциях
+
+Функция read_xlsx_transactions
+
+Считывает финансовые операции из XLSX-файла с использованием библиотеки pandas.
+
+:param file_path: Путь к XLSX-файлу.
+:return: DataFrame с данными о транзакциях.
+
+### Новые тесты test_reader.py
+
+test_read_csv_transactions и test_read_xlsx_transactions - Тесты считывания и
+Функционировая новых функций
+
 ## Автор
 
 Jade_Rabbit
