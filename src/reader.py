@@ -1,11 +1,12 @@
 import csv
-from typing import List, Dict, Any
+from typing import Any, Dict, List
+
 import pandas as pd
 
 
 def read_csv_transactions(file_path: str) -> List[Dict[str, Any]]:
     """
-    Считывает финансовые операции из CSV-файла с использованием библиотеки csv.
+    Считывает финансовые операции из CSV-файла.
 
     :param file_path: Путь к CSV-файлу.
     :return: Список словарей с данными о транзакциях.
@@ -13,37 +14,47 @@ def read_csv_transactions(file_path: str) -> List[Dict[str, Any]]:
     transactions: List[Dict[str, Any]] = []
 
     with open(file_path, mode='r', encoding='utf-8') as csvfile:
-        # Указываем delimiter=';', так как файл разделен точками с запятой
         reader = csv.DictReader(csvfile, delimiter=';')
 
         for row in reader:
-            # Пропускаем строки, где все значения пустые (например, ";;;;;;;;")
-            if any(row.values()):
-                # Преобразуем числовые поля из строк в int для корректности данных
-                row_id = row.get('id')
-                if isinstance(row_id, str) and row_id.isdigit():
-                    row['id'] = int(row_id)
+            # Пропускаем полностью пустые строки
+            if not any(row.values()):
+                continue
 
-                row_amount = row.get('amount')
-                if isinstance(row_amount, str) and row_amount.isdigit():
-                    row['amount'] = int(row_amount)
+            # Преобразуем числовые поля в int, если они представлены как строки цифр
+            if 'id' in row and isinstance(row['id'], str) and row['id'].isdigit():
+                row['id'] = int(row['id'])
+            if 'amount' in row and isinstance(row['amount'], str) and row['amount'].isdigit():
+                row['amount'] = int(row['amount'])
 
-                transactions.append(row)
+            transactions.append(row)
 
     return transactions
 
 
-def read_xlsx_transactions(file_path: str) -> pd.DataFrame:
+def read_xlsx_transactions(file_path: str) -> List[Dict[str, Any]]:
     """
-    Считывает финансовые операции из XLSX-файла с использованием библиотеки pandas.
+    Считывает финансовые операции из Excel-файла.
 
     :param file_path: Путь к XLSX-файлу.
-    :return: DataFrame с данными о транзакциях.
+    :return: Список словарей с данными о транзакциях.
     """
-    # Считываем Excel-файл (требуется установленная библиотека openpyxl)
-    df: pd.DataFrame = pd.read_excel(file_path)
+    # Читаем Excel и удаляем полностью пустые строки
+    df = pd.read_excel(file_path)
+    df = df.dropna(how='all')
 
-    # Удаляем полностью пустые строки, если они есть в Excel-файле
-    df = df.dropna(how='all').reset_index(drop=True)
+    # Заменяем NaN на None для корректного преобразования в словари Python
+    df = df.where(pd.notnull(df), None)
 
-    return df
+    # Преобразуем DataFrame в список словарей
+    transactions = df.to_dict(orient='records')
+
+    # Приводим числовые поля к int, если они являются целыми числами
+    # (pandas часто делает их float из-за наличия пустых ячеек в столбце)
+    for row in transactions:
+        if isinstance(row.get('id'), float) and float(row['id']).is_integer():
+            row['id'] = int(row['id'])
+        if isinstance(row.get('amount'), float) and float(row['amount']).is_integer():
+            row['amount'] = int(row['amount'])
+
+    return transactions
