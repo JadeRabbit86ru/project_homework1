@@ -4,7 +4,10 @@ import csv
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Sequence
+from typing import Any
+from typing import Iterable
+from typing import Iterator
+from typing import Sequence
 
 import pandas as pd  # type: ignore[import-untyped]
 

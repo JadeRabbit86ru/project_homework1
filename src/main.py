@@ -1,7 +1,10 @@
-from typing import Any, Callable
+from typing import Any
+from typing import Callable
 
-from src.utils import read_json_file, read_csv_file, read_xlsx_file
-from src.processing import process_bank_search, process_bank_operations
+from src.processing import process_bank_search
+from src.utils import read_csv_file
+from src.utils import read_json_file
+from src.utils import read_xlsx_file
 from src.views import print_operation
 
 VALID_STATUSES = ["EXECUTED", "CANCELED", "PENDING"]
