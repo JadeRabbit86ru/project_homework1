@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 from typing import Any
 
 
@@ -49,12 +50,8 @@ def process_bank_operations(data: list[dict[str, Any]], categories: list[str]) -
     :param categories: список категорий операций
     :return: словарь {название категории: количество операций}
     """
-    result: dict[str, int] = {category: 0 for category in categories}
+    descriptions = [str(operation.get("description", "")) for operation in data]
 
-    for operation in data:
-        description = str(operation.get("description", ""))
-        for category in categories:
-            if description == category:
-                result[category] += 1
+    counter: Counter[str] = Counter(descriptions)
 
-    return result
+    return {category: counter.get(category, 0) for category in categories}
