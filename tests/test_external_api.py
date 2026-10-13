@@ -1,8 +1,10 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
+from unittest.mock import patch
 
 import pytest
 
-from src.external_api import convert_to_rubles, get_exchange_rate
+from src.external_api import convert_to_rubles
+from src.external_api import get_exchange_rate
 
 
 class TestGetExchangeRate:

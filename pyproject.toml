@@ -3,26 +3,29 @@ name = "poetry-tests"
 version = "0.1.0"
 description = ""
 authors = [
-    { name = "Your Name", email = "you@example.com" }
+    { name = "Iliya Manaenkov", email = "jade_rabbit_86ru@hotmail.com" }
 ]
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 dependencies = [
     "pytest (>=7.0.0)",
     "pytest-cov (>=4.0.0)",
-    "isort (>=9.0.1,<10.0.0)",
+    "isort (>=9.0.0,<=10.0.0)",
+    "pandas (>=3.0.6,<4.0.0)",
+    "openpyxl (>=3.1.5,<4.0.0)",
 ]
-
+[tool.poetry]
+package-mode = false
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core>=2.0.0,<=3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [dependency-groups]
 lint = [
-    "flake8 (>=7.3.0,<8.0.0)",
-    "mypy (>=1.19.1,<2.0.0)",
-    "black (>=26.1.0,<27.0.0)",
-    "isort (>=8.0.0,<9.0.0)"
+    "flake8 (>=7.3.0,<=8.0.0)",
+    "mypy (>=1.19.1,<=2.0.0)",
+    "black (>=26.1.0,<=27.0.0)",
+    "isort (>=9.0.0,<=10.0.0)"
 ]
 
 [tool.black]
