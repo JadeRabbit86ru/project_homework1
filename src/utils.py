@@ -13,12 +13,8 @@ LOG_DIR.mkdir(exist_ok=True)
 utils_logger = logging.getLogger("utils")
 utils_logger.setLevel(logging.DEBUG)
 
-utils_file_handler = logging.FileHandler(
-    LOG_DIR / "utils.log", mode="w", encoding="utf-8"
-)
-utils_file_formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
+utils_file_handler = logging.FileHandler(LOG_DIR / "utils.log", mode="w", encoding="utf-8")
+utils_file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 utils_file_handler.setFormatter(utils_file_formatter)
 utils_logger.addHandler(utils_file_handler)
 
@@ -49,26 +45,20 @@ def load_transactions_from_json(filepath: str) -> List[Dict[str, Any]]:
 
         if not isinstance(data, list):
             utils_logger.error(
-                f"Данные в файле {filepath} не являются списком. "
-                f"Получен тип: {type(data).__name__}"
+                f"Данные в файле {filepath} не являются списком. " f"Получен тип: {type(data).__name__}"
             )
             return []
 
-        utils_logger.info(
-            f"Успешно загружено {len(data)} транзакций из файла {filepath}"
-        )
+        utils_logger.info(f"Успешно загружено {len(data)} транзакций из файла {filepath}")
         return data
 
     except json.JSONDecodeError as e:
-        utils_logger.error(
-            f"Ошибка декодирования JSON в файле {filepath}: {e}"
-        )
+        utils_logger.error(f"Ошибка декодирования JSON в файле {filepath}: {e}")
         return []
     except (OSError, IOError) as e:
-        utils_logger.error(
-            f"Ошибка ввода-вывода при чтении файла {filepath}: {e}"
-        )
+        utils_logger.error(f"Ошибка ввода-вывода при чтении файла {filepath}: {e}")
         return []
+
 
 # Обновление 13.2-------------------------------------------------------------------------
 

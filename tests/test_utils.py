@@ -9,14 +9,9 @@ class TestLoadTransactionsFromJson:
 
     def test_load_valid_json(self):
         """Тест загрузки валидного JSON-файла со списком транзакций."""
-        transactions = [
-            {"id": 1, "amount": 100},
-            {"id": 2, "amount": 200}
-        ]
+        transactions = [{"id": 1, "amount": 100}, {"id": 2, "amount": 200}]
 
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False, encoding="utf-8"
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
             json.dump(transactions, f)
             temp_path = f.name
 
@@ -34,9 +29,7 @@ class TestLoadTransactionsFromJson:
 
     def test_empty_file(self):
         """Тест: пустой файл — возвращается пустой список."""
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False, encoding="utf-8"
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
             f.write("")
             temp_path = f.name
 
@@ -50,9 +43,7 @@ class TestLoadTransactionsFromJson:
         """Тест: файл содержит словарь, а не список — возвращается пустой список."""
         data = {"id": 1, "amount": 100}
 
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False, encoding="utf-8"
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
             json.dump(data, f)
             temp_path = f.name
 
@@ -64,9 +55,7 @@ class TestLoadTransactionsFromJson:
 
     def test_file_contains_string_not_list(self):
         """Тест: файл содержит строку, а не список — возвращается пустой список."""
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False, encoding="utf-8"
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
             json.dump("not a list", f)
             temp_path = f.name
 
@@ -78,9 +67,7 @@ class TestLoadTransactionsFromJson:
 
     def test_invalid_json(self):
         """Тест: невалидный JSON — возвращается пустой список."""
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False, encoding="utf-8"
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
             f.write("{invalid json content}")
             temp_path = f.name
 
@@ -92,9 +79,7 @@ class TestLoadTransactionsFromJson:
 
     def test_empty_list(self):
         """Тест: файл содержит пустой список — возвращается пустой список."""
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".json", delete=False, encoding="utf-8"
-        ) as f:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=False, encoding="utf-8") as f:
             json.dump([], f)
             temp_path = f.name
 

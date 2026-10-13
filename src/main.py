@@ -4,7 +4,6 @@ from src.utils import read_json_file, read_csv_file, read_xlsx_file
 from src.processing import process_bank_search, process_bank_operations
 from src.views import print_operation
 
-
 VALID_STATUSES = ["EXECUTED", "CANCELED", "PENDING"]
 
 
@@ -64,10 +63,7 @@ def _filter_by_status(data: list[dict[str, Any]]) -> list[dict[str, Any]]:
         status = input().strip().upper()
         if status in VALID_STATUSES:
             print(f'Операции отфильтрованы по статусу "{status}"')
-            return [
-                op for op in data
-                if str(op.get("state", "")).upper() == status
-            ]
+            return [op for op in data if str(op.get("state", "")).upper() == status]
         print(f'Статус операции "{status}" недоступен.')
 
 
@@ -102,9 +98,7 @@ def _filter_rubles(data: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 def _filter_by_word(data: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Фильтрует по слову в описании через process_bank_search."""
-    if not _ask_yes_no(
-        "Отфильтровать список транзакций по определенному слову в описании? Да/Нет"
-    ):
+    if not _ask_yes_no("Отфильтровать список транзакций по определенному слову в описании? Да/Нет"):
         return data
 
     search = input("Введите слово для поиска в описании: ").strip()
@@ -122,10 +116,7 @@ def main() -> None:
     print("Распечатываю итоговый список транзакций...\n")
 
     if not data:
-        print(
-            "Не найдено ни одной транзакции, подходящей под ваши\n"
-            "условия фильтрации"
-        )
+        print("Не найдено ни одной транзакции, подходящей под ваши\n" "условия фильтрации")
         return
 
     print(f"Всего банковских операций в выборке: {len(data)}\n")

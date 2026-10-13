@@ -11,6 +11,7 @@ def sort_by_date(transactions: list, reverse: bool = True) -> list:
     """Сортирует список словарей по дате."""
     return sorted(transactions, key=lambda item: item.get("date", ""), reverse=reverse)
 
+
 # Обновление 13.2-------------------------------------------------------------------------
 
 
@@ -38,9 +39,7 @@ def process_bank_search(data: list[dict[str, Any]], search: str) -> list[dict[st
     return result
 
 
-def process_bank_operations(
-    data: list[dict[str, Any]], categories: list[str]
-) -> dict[str, int]:
+def process_bank_operations(data: list[dict[str, Any]], categories: list[str]) -> dict[str, int]:
     """
     Подсчитывает количество операций в каждой из заданных категорий.
 

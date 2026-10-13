@@ -16,8 +16,8 @@ from reader import (
     transactions_to_dicts,
 )
 
-
 # ---------- Фикстуры ----------
+
 
 @pytest.fixture
 def sample_csv(tmp_path: Path) -> Path:
@@ -26,18 +26,32 @@ def sample_csv(tmp_path: Path) -> Path:
     with file_path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(COLUMNS)
-        writer.writerow([
-            "650703", "EXECUTED", "2023-09-05T11:30:32Z", "16210",
-            "Sol", "PEN",
-            "Счет 58803664561298323391", "Счет 39745660563456619397",
-            "Перевод организации",
-        ])
-        writer.writerow([
-            "3598919", "EXECUTED", "2020-12-06T23:00:58Z", "29740",
-            "Peso", "COP",
-            "Discover 3172601889670065", "Discover 0720428384694643",
-            "Перевод с карты на карту",
-        ])
+        writer.writerow(
+            [
+                "650703",
+                "EXECUTED",
+                "2023-09-05T11:30:32Z",
+                "16210",
+                "Sol",
+                "PEN",
+                "Счет 58803664561298323391",
+                "Счет 39745660563456619397",
+                "Перевод организации",
+            ]
+        )
+        writer.writerow(
+            [
+                "3598919",
+                "EXECUTED",
+                "2020-12-06T23:00:58Z",
+                "29740",
+                "Peso",
+                "COP",
+                "Discover 3172601889670065",
+                "Discover 0720428384694643",
+                "Перевод с карты на карту",
+            ]
+        )
     return file_path
 
 
@@ -49,17 +63,32 @@ def sample_csv_with_empty(tmp_path: Path) -> Path:
         writer = csv.writer(f, delimiter=";")
         writer.writerow(COLUMNS)
         writer.writerow([""] * 9)
-        writer.writerow([
-            "632926", "PENDING", "2021-11-27T00:46:09Z", "29553",
-            "Yuan Renminbi", "CNY",
-            "American Express 6477627838877562",
-            "Счет 88381741644903346269",
-            "Перевод организации",
-        ])
-        writer.writerow([
-            "bad_id", "PENDING", "bad_date", "29553",
-            "Yuan Renminbi", "CNY", "a", "b", "c",
-        ])
+        writer.writerow(
+            [
+                "632926",
+                "PENDING",
+                "2021-11-27T00:46:09Z",
+                "29553",
+                "Yuan Renminbi",
+                "CNY",
+                "American Express 6477627838877562",
+                "Счет 88381741644903346269",
+                "Перевод организации",
+            ]
+        )
+        writer.writerow(
+            [
+                "bad_id",
+                "PENDING",
+                "bad_date",
+                "29553",
+                "Yuan Renminbi",
+                "CNY",
+                "a",
+                "b",
+                "c",
+            ]
+        )
     return file_path
 
 
@@ -70,15 +99,23 @@ def sample_xlsx(tmp_path: Path) -> Path:
     df = pd.DataFrame(
         [
             [
-                "650703", "EXECUTED", "2023-09-05T11:30:32Z", "16210",
-                "Sol", "PEN",
+                "650703",
+                "EXECUTED",
+                "2023-09-05T11:30:32Z",
+                "16210",
+                "Sol",
+                "PEN",
                 "Счет 58803664561298323391",
                 "Счет 39745660563456619397",
                 "Перевод организации",
             ],
             [
-                "3598919", "EXECUTED", "2020-12-06T23:00:58Z", "29740",
-                "Peso", "COP",
+                "3598919",
+                "EXECUTED",
+                "2020-12-06T23:00:58Z",
+                "29740",
+                "Peso",
+                "COP",
                 "Discover 3172601889670065",
                 "Discover 0720428384694643",
                 "Перевод с карты на карту",
@@ -91,6 +128,7 @@ def sample_xlsx(tmp_path: Path) -> Path:
 
 
 # ---------- Тесты read_transactions_csv ----------
+
 
 class TestReadTransactionsCsv:
     def test_reads_all_rows(self, sample_csv: Path) -> None:
@@ -113,9 +151,7 @@ class TestReadTransactionsCsv:
         assert t.to_account == "Счет 39745660563456619397"
         assert t.description == "Перевод организации"
 
-    def test_skips_empty_and_invalid_rows(
-        self, sample_csv_with_empty: Path
-    ) -> None:
+    def test_skips_empty_and_invalid_rows(self, sample_csv_with_empty: Path) -> None:
         result = read_transactions_csv(sample_csv_with_empty)
         assert len(result) == 1
         assert result[0].id == 632926
@@ -142,6 +178,7 @@ class TestReadTransactionsCsv:
 
 # ---------- Тесты read_transactions_xlsx ----------
 
+
 class TestReadTransactionsXlsx:
     def test_reads_all_rows(self, sample_xlsx: Path) -> None:
         result = read_transactions_xlsx(sample_xlsx)
@@ -159,14 +196,13 @@ class TestReadTransactionsXlsx:
 
     def test_missing_columns_raise(self, tmp_path: Path) -> None:
         file_path = tmp_path / "bad.xlsx"
-        pd.DataFrame({"id": [1], "state": ["EXECUTED"]}).to_excel(
-            file_path, index=False, engine="openpyxl"
-        )
+        pd.DataFrame({"id": [1], "state": ["EXECUTED"]}).to_excel(file_path, index=False, engine="openpyxl")
         with pytest.raises(ValueError, match="отсутствуют колонки"):
             read_transactions_xlsx(file_path)
 
 
 # ---------- Тесты iter_transactions_csv ----------
+
 
 class TestIterTransactionsCsv:
     def test_yields_transactions(self, sample_csv: Path) -> None:
@@ -185,6 +221,7 @@ class TestIterTransactionsCsv:
 
 # ---------- Тесты transactions_to_dicts ----------
 
+
 class TestTransactionsToDicts:
     def test_converts_to_dicts(self, sample_csv: Path) -> None:
         transactions = read_transactions_csv(sample_csv)
@@ -200,10 +237,9 @@ class TestTransactionsToDicts:
 
 # ---------- Сравнение CSV и XLSX ----------
 
+
 class TestCsvXlsxParity:
-    def test_same_content(
-        self, sample_csv: Path, sample_xlsx: Path
-    ) -> None:
+    def test_same_content(self, sample_csv: Path, sample_xlsx: Path) -> None:
         csv_result = read_transactions_csv(sample_csv)
         xlsx_result = read_transactions_xlsx(sample_xlsx)
         assert csv_result == xlsx_result

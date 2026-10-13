@@ -23,15 +23,10 @@ def get_exchange_rate(currency: str) -> float:
         raise ValueError("API ключ не найден. Проверьте файл .env")
 
     # Формируем заголовки точно так, как показал сервис
-    headers = {
-        "apikey": API_KEY
-    }
+    headers = {"apikey": API_KEY}
 
     # Формируем параметры запроса (base - ваша валюта, symbols - то, во что конвертируем)
-    params = {
-        "base": currency,
-        "symbols": "RUB"
-    }
+    params = {"base": currency, "symbols": "RUB"}
 
     # Делаем GET-запрос
     response = requests.get(EXCHANGE_RATES_API_URL, headers=headers, params=params)
