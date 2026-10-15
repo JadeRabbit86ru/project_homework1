@@ -4,7 +4,10 @@ import csv
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Sequence
+from typing import Any
+from typing import Iterable
+from typing import Iterator
+from typing import Sequence
 
 import pandas as pd  # type: ignore[import-untyped]
 
@@ -45,8 +48,9 @@ def _parse_row(row: Sequence[str]) -> Transaction | None:
     if len(row) < len(COLUMNS):
         return None
 
-    raw_id, raw_state, raw_date, raw_amount, \
-        currency_name, currency_code, from_account, to_account, description = row[:9]
+    raw_id, raw_state, raw_date, raw_amount, currency_name, currency_code, from_account, to_account, description = row[
+        :9
+    ]
 
     # Пропускаем полностью пустые строки
     if not raw_id.strip():
@@ -107,9 +111,7 @@ def read_transactions_csv(
 
         missing = [col for col in COLUMNS if col not in header]
         if missing:
-            raise ValueError(
-                f"В CSV-файле отсутствуют колонки: {', '.join(missing)}"
-            )
+            raise ValueError(f"В CSV-файле отсутствуют колонки: {', '.join(missing)}")
 
         # Приводим заголовок к ожидаемому порядку колонок
         index_map = {name: header.index(name) for name in COLUMNS}
@@ -146,20 +148,15 @@ def read_transactions_xlsx(
     if not path.exists():
         raise FileNotFoundError(f"Файл не найден: {path}")
 
-    df: pd.DataFrame = pd.read_excel(
-        path, sheet_name=sheet_name, dtype=str, engine="openpyxl"
-    )
+    df: pd.DataFrame = pd.read_excel(path, sheet_name=sheet_name, dtype=str, engine="openpyxl")
 
     missing = [col for col in COLUMNS if col not in df.columns]
     if missing:
-        raise ValueError(
-            f"В XLSX-файле отсутствуют колонки: {', '.join(missing)}"
-        )
+        raise ValueError(f"В XLSX-файле отсутствуют колонки: {', '.join(missing)}")
 
     transactions: list[Transaction] = []
     for _, row in df.iterrows():
-        values: list[str] = [str(row[col]) if pd.notna(row[col]) else ""
-                            for col in COLUMNS]
+        values: list[str] = [str(row[col]) if pd.notna(row[col]) else "" for col in COLUMNS]
         transaction = _parse_row(values)
         if transaction is not None:
             transactions.append(transaction)
@@ -214,9 +211,7 @@ def iter_transactions_csv(
 
         missing = [col for col in COLUMNS if col not in header]
         if missing:
-            raise ValueError(
-                f"В CSV-файле отсутствуют колонки: {', '.join(missing)}"
-            )
+            raise ValueError(f"В CSV-файле отсутствуют колонки: {', '.join(missing)}")
 
         index_map = {name: header.index(name) for name in COLUMNS}
 

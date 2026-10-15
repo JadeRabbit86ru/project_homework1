@@ -17,7 +17,7 @@ class TestGetExchangeRate:
             "success": True,
             "base": "USD",
             "date": "2021-03-17",
-            "rates": {"RUB": 73.5}
+            "rates": {"RUB": 73.5},
         }
         mock_response.raise_for_status = MagicMock()
         mock_get.return_value = mock_response
@@ -34,7 +34,7 @@ class TestGetExchangeRate:
             "success": True,
             "base": "EUR",
             "date": "2021-03-17",
-            "rates": {"RUB": 87.2}
+            "rates": {"RUB": 87.2},
         }
         mock_response.raise_for_status = MagicMock()
         mock_get.return_value = mock_response
@@ -46,10 +46,7 @@ class TestGetExchangeRate:
     def test_get_exchange_rate_api_error(self, mock_get):
         """Тест: API возвращает ошибку — выбрасывается исключение."""
         mock_response = MagicMock()
-        mock_response.json.return_value = {
-            "success": False,
-            "error": {"type": "invalid_access_key"}
-        }
+        mock_response.json.return_value = {"success": False, "error": {"type": "invalid_access_key"}}
         mock_response.raise_for_status = MagicMock()
         mock_get.return_value = mock_response
 
@@ -61,12 +58,7 @@ class TestConvertToRubles:
 
     def test_convert_rub_transaction(self):
         """Тест: транзакция в рублях — конвертация не требуется."""
-        transaction = {
-            "operationAmount": {
-                "amount": "1000.00",
-                "currency": {"code": "RUB", "name": "RUB"}
-            }
-        }
+        transaction = {"operationAmount": {"amount": "1000.00", "currency": {"code": "RUB", "name": "RUB"}}}
         result = convert_to_rubles(transaction)
         assert result == 1000.0
         assert isinstance(result, float)
@@ -76,12 +68,7 @@ class TestConvertToRubles:
         """Тест: транзакция в USD — конвертация через API."""
         mock_rate.return_value = 73.5
 
-        transaction = {
-            "operationAmount": {
-                "amount": "100.00",
-                "currency": {"code": "USD", "name": "USD"}
-            }
-        }
+        transaction = {"operationAmount": {"amount": "100.00", "currency": {"code": "USD", "name": "USD"}}}
         result = convert_to_rubles(transaction)
         assert result == 7350.0
         mock_rate.assert_called_once_with("USD")
@@ -91,24 +78,14 @@ class TestConvertToRubles:
         """Тест: транзакция в EUR — конвертация через API."""
         mock_rate.return_value = 87.2
 
-        transaction = {
-            "operationAmount": {
-                "amount": "50.00",
-                "currency": {"code": "EUR", "name": "EUR"}
-            }
-        }
+        transaction = {"operationAmount": {"amount": "50.00", "currency": {"code": "EUR", "name": "EUR"}}}
         result = convert_to_rubles(transaction)
         assert result == 4360.0
         mock_rate.assert_called_once_with("EUR")
 
     def test_convert_unsupported_currency(self):
         """Тест: неподдерживаемая валюта — выбрасывается исключение."""
-        transaction = {
-            "operationAmount": {
-                "amount": "100.00",
-                "currency": {"code": "GBP", "name": "GBP"}
-            }
-        }
+        transaction = {"operationAmount": {"amount": "100.00", "currency": {"code": "GBP", "name": "GBP"}}}
         with pytest.raises(ValueError, match="Неподдерживаемая валюта"):
             convert_to_rubles(transaction)
 
@@ -123,11 +100,6 @@ class TestConvertToRubles:
         """Тест: результат конвертации округляется до 2 знаков."""
         mock_rate.return_value = 73.456
 
-        transaction = {
-            "operationAmount": {
-                "amount": "100.00",
-                "currency": {"code": "USD", "name": "USD"}
-            }
-        }
+        transaction = {"operationAmount": {"amount": "100.00", "currency": {"code": "USD", "name": "USD"}}}
         result = convert_to_rubles(transaction)
         assert result == 7345.60
