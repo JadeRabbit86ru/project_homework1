@@ -35,6 +35,11 @@ dev = [
 line-length = 119
 exclude = '''
 (
+    venv
+  | \.venv
+  | env
+  | build
+  | dist
   /(
       \.git
   )/
