@@ -6,6 +6,16 @@ from src.ecommerce.models import Category, Product
 """Точка входа: демонстрация работы классов и загрузки из JSON."""
 
 
+from pathlib import Path
+
+from src.ecommerce.json_loader import load_categories_from_json
+from src.ecommerce.models import Category, Product
+
+# Корень проекта = папка, где лежит main.py
+BASE_DIR = Path(__file__).resolve().parent
+DATA_FILE = BASE_DIR / "data" / "products.json"
+
+
 def demo() -> None:
     """Демонстрация функционала."""
     # Ручное создание объектов
@@ -18,12 +28,13 @@ def demo() -> None:
     print(f"Всего товаров:   {Category.product_count}")
 
     # Загрузка из JSON
-    json_path = Path(__file__).parent / "products.json"
-    if json_path.exists():
-        cats = load_categories_from_json(json_path)
+    if DATA_FILE.exists():
+        cats = load_categories_from_json(DATA_FILE)
         print(f"\nЗагружено из JSON категорий: {len(cats)}")
         for c in cats:
             print(f" - {c.name}: {len(c.products)} товар(ов)")
+    else:
+        print(f"\nФайл данных не найден: {DATA_FILE}")
 
 
 if __name__ == "__main__":
