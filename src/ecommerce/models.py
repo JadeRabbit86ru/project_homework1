@@ -12,11 +12,11 @@ class Product:
     quantity: int
 
     def __init__(
-            self,
-            name: str,
-            description: str,
-            price: float,
-            quantity: int,
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
     ) -> None:
         self.name = name
         self.description = description
@@ -35,10 +35,10 @@ class Category:
     products: List[Product]
 
     def __init__(
-            self,
-            name: str,
-            description: str,
-            products: List[Product],
+        self,
+        name: str,
+        description: str,
+        products: List[Product],
     ) -> None:
         self.name = name
         self.description = description

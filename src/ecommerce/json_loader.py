@@ -1,8 +1,10 @@
 import json
 from pathlib import Path
-from typing import List, Union
+from typing import List
+from typing import Union
 
-from .models import Category, Product
+from .models import Category
+from .models import Product
 
 """Загрузка категорий и товаров из JSON-файла."""
 

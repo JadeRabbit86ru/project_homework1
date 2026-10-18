@@ -1,6 +1,7 @@
 import pytest
 
-from src.ecommerce.models import Category, Product
+from src.ecommerce.models import Category
+from src.ecommerce.models import Product
 
 
 @pytest.fixture(autouse=True)

@@ -1,9 +1,11 @@
-from src.ecommerce.models import Category, Product
+from src.ecommerce.models import Category
+from src.ecommerce.models import Product
 
 """Тесты классов Product и Category."""
 
 
 # ---------- Product ----------
+
 
 def test_product_init():
     p = Product("Iphone 15", "512GB, Gray space", 210_000.0, 8)
@@ -22,6 +24,7 @@ def test_product_types():
 
 # ---------- Category ----------
 
+
 def test_category_init(sample_products):
     cat = Category("Смартфоны", "Описание", sample_products)
     assert cat.name == "Смартфоны"
@@ -37,10 +40,11 @@ def test_category_empty_products():
 
 # ---------- Счётчики ----------
 
+
 def test_product_count_accumulates(sample_products):
-    Category("A", "d", sample_products)                    # +3
-    Category("B", "d", [])                                 # +0
-    Category("C", "d", [sample_products[0]])               # +1
+    Category("A", "d", sample_products)  # +3
+    Category("B", "d", [])  # +0
+    Category("C", "d", [sample_products[0]])  # +1
     assert Category.product_count == 4
 
 

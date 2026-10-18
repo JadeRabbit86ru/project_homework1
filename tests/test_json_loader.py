@@ -1,7 +1,8 @@
 import json
 
 from src.ecommerce.json_loader import load_categories_from_json
-from src.ecommerce.models import Category, Product
+from src.ecommerce.models import Category
+from src.ecommerce.models import Product
 
 """Тесты загрузки данных из JSON."""
 
