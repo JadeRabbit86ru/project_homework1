@@ -320,6 +320,27 @@ utils
 ## Новые тесты test_reader.py
 
 Проверка правильности работы нового модуля
+
+# Обновление 14.1 от 18.10.2026
+
+## Новые модули
+
+main.py - реализована демонстрация работы классов и загрузки из JSON
+
+В директории src/ecommerce добавлены модули models.py и json_loader.py
+
+models.py - созданы классы Product и Category
+json_loader.py - реализована подгрузку данных по категориями и товарам из файла JSON
+
+## Новые тесты
+
+conftes.py
+reset_counters — изоляция тестов
+sample_products — переиспользование данных
+
+test_models.py - тесты классов созданных models.py покрытие >75%
+
+test_json_loader.py - тест загрузки JSON файла
  
 ## Автор
 
