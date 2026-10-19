@@ -7,14 +7,12 @@ from pathlib import Path
 import pandas as pd  # type: ignore[import-untyped]
 import pytest
 
-from reader import (
-    COLUMNS,
-    Transaction,
-    iter_transactions_csv,
-    read_transactions_csv,
-    read_transactions_xlsx,
-    transactions_to_dicts,
-)
+from reader import COLUMNS
+from reader import Transaction
+from reader import iter_transactions_csv
+from reader import read_transactions_csv
+from reader import read_transactions_xlsx
+from reader import transactions_to_dicts
 
 # ---------- Фикстуры ----------
 
