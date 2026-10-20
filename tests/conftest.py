@@ -3,6 +3,8 @@ import pytest
 from src.ecommerce.models import Category
 from src.ecommerce.models import Product
 
+"""Фикстуры"""
+
 
 @pytest.fixture(autouse=True)
 def reset_counters():
@@ -21,3 +23,13 @@ def sample_products():
         Product("Iphone 15", "512GB", 210_000.0, 8),
         Product("Xiaomi Redmi Note 11", "1024GB", 31_000.0, 14),
     ]
+
+
+@pytest.fixture
+def sample_product():
+    return Product(name="Яблоко", description="Свежее", price=80, quantity=15)
+
+
+@pytest.fixture
+def sample_category():
+    return Category(name="Фрукты", description="Свежие фрукты")
