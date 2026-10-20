@@ -74,7 +74,7 @@ class Product:
         # Доп. задание: подтверждение понижения цены
         if new_price < self.__price:
             answer = input(f"Понизить цену с {self.__price} до {new_price}? (y/n): ")
-            if answer.lower() != 'y':
+            if answer.lower() != "y":
                 return
 
         self.__price = new_price

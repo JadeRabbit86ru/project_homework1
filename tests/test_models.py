@@ -69,6 +69,7 @@ def test_counters_shared_across_instances(sample_products):
 
 # --- Product ---
 
+
 def test_product_init2(sample_product):
     assert sample_product.name == "Яблоко"
     assert sample_product.price == 80
@@ -81,7 +82,7 @@ def test_price_getter(sample_product):
 
 def test_price_setter_valid(sample_product, monkeypatch):
     # Подменяем input, чтобы не блокировать тест, если сработает доп. задание
-    monkeypatch.setattr('builtins.input', lambda _: 'y')
+    monkeypatch.setattr("builtins.input", lambda _: "y")
     sample_product.price = 100
     assert sample_product.price == 100
 
@@ -111,6 +112,7 @@ def test_new_product_merge_duplicates(sample_product):
 
 
 # --- Тесты для Category ---
+
 
 def test_category_init2(sample_category):
     assert sample_category.name == "Фрукты"
