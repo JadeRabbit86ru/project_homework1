@@ -35,6 +35,7 @@
 #
 # if __name__ == "__main__":
 #     demo()
+from src.ecommerce.models import Product, Category
 
 # Дз 14.2
 
