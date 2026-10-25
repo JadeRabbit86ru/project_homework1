@@ -1,7 +1,5 @@
-from src.ecommerce.models import Category
-from src.ecommerce.models import Product
-
 """Тесты классов Product и Category."""
+from src.ecommerce.models import Product, Category
 
 
 # ---------- Product ----------
@@ -135,3 +133,25 @@ def test_products_getter_multiple(sample_category, sample_product):
 
     expected = "Яблоко, 80 руб. Остаток: 15 шт.\nГруша, 60 руб. Остаток: 20 шт.\n"
     assert sample_category.products == expected
+
+
+"""Работа 15.1"""
+
+
+def test_product_str():
+    p = Product("Test", "Desc", 100.0, 5)
+    assert str(p) == "Test, 100.0 руб. Остаток: 5 шт."
+
+
+def test_category_str():
+    p1 = Product("A", "Desc", 100.0, 5)
+    p2 = Product("B", "Desc", 200.0, 10)
+    cat = Category("TestCat", "Desc", [p1, p2])
+    # Общее количество: 5 + 10 = 15
+    assert str(cat) == "TestCat, количество продуктов: 15 шт."
+
+
+def test_product_add():
+    p1 = Product("A", "Desc", 100.0, 10)  # 1000
+    p2 = Product("B", "Desc", 200.0, 2)  # 400
+    assert p1 + p2 == 1400.0
