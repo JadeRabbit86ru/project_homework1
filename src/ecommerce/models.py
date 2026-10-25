@@ -131,7 +131,7 @@
 #             result += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
 #         return result
 
-"""Работ 15.1"""
+"""Работа 15.1"""
 
 
 class Product:
