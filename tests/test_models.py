@@ -1,6 +1,7 @@
 """Тесты классов Product и Category."""
-from src.ecommerce.models import Product, Category
 
+from src.ecommerce.models import Category
+from src.ecommerce.models import Product
 
 # ---------- Product ----------
 
