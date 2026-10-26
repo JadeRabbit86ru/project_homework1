@@ -71,7 +71,8 @@
 #     print(new_product.price)
 #     new_product.price = 0
 #     print(new_product.price)
-from src.ecommerce.models import Product, Category
+from src.ecommerce.models import Category
+from src.shop_project import Smartphone, LawnGrass
 
 # Дз 15.1
 #
