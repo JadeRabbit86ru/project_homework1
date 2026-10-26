@@ -1,6 +1,6 @@
 import pytest
 
-from src.shop_project import LawnGrass, Product, Smartphone
+from src.shop_project import Product
 
 
 def test_product_init(product):

@@ -10,9 +10,7 @@ class Product:
     def __add__(self, other):
         """Сложение товаров только одного и того же класса."""
         if type(self) is not type(other):
-            raise TypeError(
-                "Можно складывать только товары одного класса"
-            )
+            raise TypeError("Можно складывать только товары одного класса")
         return self.price * self.quantity + other.price * other.quantity
 
     def __repr__(self):

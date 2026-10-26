@@ -22,7 +22,4 @@ class Smartphone(Product):
         self.color = color
 
     def __repr__(self):
-        return (
-            f"Smartphone({self.name!r}, model={self.model!r}, "
-            f"memory={self.memory}, color={self.color!r})"
-        )
+        return f"Smartphone({self.name!r}, model={self.model!r}, " f"memory={self.memory}, color={self.color!r})"

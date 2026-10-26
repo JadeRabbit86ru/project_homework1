@@ -39,6 +39,7 @@ def test_add_product_invalid_int_raises(category):
 
 def test_product_count_increases(smartphone1):
     from src.shop_project import Category
+
     Category.product_count = 0
     Category("A", "d", [smartphone1])
     Category("B", "d", [smartphone1])

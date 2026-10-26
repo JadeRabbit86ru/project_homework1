@@ -11,12 +11,10 @@ def test_smartphone_attributes(smartphone1):
 
 def test_smartphone_is_product_subclass():
     from src.shop_project import Product
+
     assert issubclass(Smartphone, Product)
 
 
 def test_smartphone_add(smartphone1, smartphone2):
-    expected = (
-        smartphone1.price * smartphone1.quantity
-        + smartphone2.price * smartphone2.quantity
-    )
+    expected = smartphone1.price * smartphone1.quantity + smartphone2.price * smartphone2.quantity
     assert smartphone1 + smartphone2 == expected

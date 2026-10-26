@@ -1,4 +1,5 @@
-from src.shop_project import LawnGrass, Product
+from src.shop_project import LawnGrass
+from src.shop_project import Product
 
 
 def test_lawn_grass_attributes(grass1):
