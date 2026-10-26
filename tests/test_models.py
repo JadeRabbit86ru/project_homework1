@@ -156,3 +156,4 @@ def test_product_add():
     p1 = Product("A", "Desc", 100.0, 10)  # 1000
     p2 = Product("B", "Desc", 200.0, 2)  # 400
     assert p1 + p2 == 1400.0
+ 
