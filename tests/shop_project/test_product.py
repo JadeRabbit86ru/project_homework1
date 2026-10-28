@@ -1,6 +1,6 @@
 import pytest
 
-from src.shop_project import Product
+from src.shop_project import Product, BaseProduct
 
 
 def test_product_init(product):
@@ -24,3 +24,12 @@ def test_product_add_different_classes_raises(smartphone1, grass1):
 def test_product_add_with_subclass_raises(product, smartphone1):
     with pytest.raises(TypeError):
         _ = product + smartphone1
+
+
+def test_product_is_baseproduct_subclass():
+    assert issubclass(Product, BaseProduct)
+
+
+def test_baseproduct_is_abstract():
+    with pytest.raises(TypeError):
+        BaseProduct("A", "d", 100.0, 1)
