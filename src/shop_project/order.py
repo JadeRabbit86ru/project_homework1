@@ -13,13 +13,15 @@ class Order(BaseInfo):
         if quantity > product.quantity:
             raise ValueError("Недостаточно товара на складе")
 
+        # Вызываем инициализатор BaseInfo
         super().__init__(product.name, f"Заказ на {product.name}")
+
         self.product = product
         self.quantity = quantity
         self.total_price = product.price * quantity
 
-    @property
     def __str__(self) -> str:
+        # Важно: это метод, а не атрибут!
         return (
             f"Заказ: {self.product.name}, количество: {self.quantity}, "
             f"итого: {self.total_price} руб."
