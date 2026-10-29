@@ -33,3 +33,24 @@ def test_product_is_baseproduct_subclass():
 def test_baseproduct_is_abstract():
     with pytest.raises(TypeError):
         BaseProduct("A", "d", 100.0, 1)
+
+
+"""Работа 17.1"""
+
+from src.shop_project import Product, ZeroQuantityError
+
+
+def test_product_zero_quantity_raises_value_error():
+    with pytest.raises(ValueError) as excinfo:
+        Product("Товар", "Описание", 100.0, 0)
+    assert str(excinfo.value) == "Товар с нулевым количеством не может быть добавлен"
+
+
+def test_product_negative_quantity_raises():
+    with pytest.raises(ValueError):
+        Product("Товар", "Описание", 100.0, -1)
+
+
+def test_product_zero_quantity_is_zero_quantity_error():
+    with pytest.raises(ZeroQuantityError):
+        Product("Товар", "Описание", 100.0, 0)
