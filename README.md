@@ -411,6 +411,39 @@ tests/shop_project
   (общие свойства: name, description, абстрактный `__str__`).
 - Класс `Order` (доп. задание): один товар, количество и итоговая стоимость.
 
+# Обновление 17.1 от 29.10.2026
+
+Новое содержимое модуля main.py данное из задания.
+
+Добавлен новый модуль:
+
+src/shop_project/exceptions.py 
+
+Внесены изменения:
+
+src/shop_project/abstract_classes.py
+
+src/shop_project/category.py
+
+src/shop_project/order.py
+
+src/shop_project/__init__.py
+
+Новые тесты (Покрытие 94%):
+
+tests/shop_project/test_product.py
+
+tests/shop_project/test_category.py
+
+tests/shop_project/test_exceptions.py
+
+tests/shop_project/test_order.py
+
+### Отчет по проделанной работе 17.1 Исключения:
+- **Валидация:** при попытке создать товар с нулевым или отрицательным количеством выбрасывается исключение `ValueError` (через кастомный класс `ZeroQuantityError`) с сообщением «Товар с нулевым количеством не может быть добавлен».
+- **Средний ценник:** в классе `Category` реализован метод `average_price()`, который считает среднюю цену товаров и возвращает `0`, если категория пуста (обработка `ZeroDivisionError`).
+- **Обработка в заказах:** в классе `Order` реализована конструкция `try/except/else/finally` для логирования этапов добавления товара (успех / ошибка нулевого количества / завершение обработки).
+
 ## Автор
 
 Jade_Rabbit
