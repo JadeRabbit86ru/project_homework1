@@ -1,4 +1,5 @@
-from abc import ABC, abstractmethod
+from abc import ABC
+from abc import abstractmethod
 
 
 class BaseProduct(ABC):
@@ -8,6 +9,7 @@ class BaseProduct(ABC):
         if quantity <= 0:
             # Импорт внутри — чтобы не было циклической зависимости
             from .exceptions import ZeroQuantityError
+
             raise ZeroQuantityError()
 
         super().__init__()

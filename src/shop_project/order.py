@@ -29,7 +29,4 @@ class Order(BaseInfo):
         self.total_price = product.price * quantity
 
     def __str__(self) -> str:
-        return (
-            f"Заказ: {self.product.name}, количество: {self.quantity}, "
-            f"итого: {self.total_price} руб."
-        )
+        return f"Заказ: {self.product.name}, количество: {self.quantity}, " f"итого: {self.total_price} руб."

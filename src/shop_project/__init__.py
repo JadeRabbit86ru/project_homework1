@@ -1,4 +1,5 @@
-from .abstract_classes import BaseInfo, BaseProduct
+from .abstract_classes import BaseInfo
+from .abstract_classes import BaseProduct
 from .category import Category
 from .exceptions import ZeroQuantityError
 from .lawn_grass import LawnGrass
