@@ -31,7 +31,7 @@
 #     def __len__(self):
 #         return len(self.__products)
 
-"""Работа 16.2"""
+"""Работа 16.2 и 17.1"""
 
 from .abstract_classes import BaseInfo
 from .product import Product
@@ -51,17 +51,26 @@ class Category(BaseInfo):
 
     @property
     def products(self) -> list:
-        """Список товаров категории."""
         return self.__products
 
     def add_product(self, product) -> None:
-        """Добавить продукт. Принимает только Product и его наследников."""
         if not isinstance(product, Product):
             raise TypeError(
                 "В категорию можно добавлять только объекты Product и его наследников"
             )
         self.__products.append(product)
         Category.product_count += 1
+
+    def average_price(self) -> float:
+        """Средняя цена товаров в категории.
+
+        Возвращает 0, если товаров нет (обработка ZeroDivisionError).
+        """
+        try:
+            total = sum(product.price for product in self.__products)
+            return total / len(self.__products)
+        except ZeroDivisionError:
+            return 0
 
     def __str__(self) -> str:
         lines = []
@@ -75,5 +84,5 @@ class Category(BaseInfo):
     def __len__(self) -> int:
         return len(self.__products)
 
-    def middle_price(self):
-        pass
+    def __len__(self) -> int:
+        return len(self.__products)
