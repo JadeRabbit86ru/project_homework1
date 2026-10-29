@@ -74,3 +74,6 @@ class Category(BaseInfo):
 
     def __len__(self) -> int:
         return len(self.__products)
+
+    def middle_price(self):
+        pass
