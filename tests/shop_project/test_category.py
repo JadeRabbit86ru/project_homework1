@@ -1,6 +1,6 @@
 import pytest
 
-from src.shop_project import Product
+from src.shop_project import Product, Category
 
 
 def test_category_init(category):
@@ -44,3 +44,17 @@ def test_product_count_increases(smartphone1):
     Category("A", "d", [smartphone1])
     Category("B", "d", [smartphone1])
     assert Category.product_count == 2
+
+
+"""Работа 17.1"""
+
+
+def test_average_price_with_products(category):
+    # category создаётся из smartphone1 + smartphone2
+    expected = (180000.0 + 210000.0) / 2
+    assert category.average_price() == expected
+
+
+def test_average_price_empty_category():
+    empty = Category("Пустая", "Нет товаров", [])
+    assert empty.average_price() == 0
